@@ -1,6 +1,6 @@
 # python server log
 
-import socket, getopt, sys, time 
+import socket, getopt, sys, time, os
 from datetime import datetime
 from contextlib import closing
 def ServerStart(HOST, PORT):
@@ -98,7 +98,12 @@ def Main():
 def Log_Init():
 	global f
 	d = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-	f=open(d+'.txt', 'w')
+	if os.name == 'nt':
+		# env = os.environ['USERPROFILE'] +"/Documents/"
+		d = datetime.now().strftime("%Y-%m-%d @ (%H-%M-%S)")
+		f=open(d +'.txt', 'w')
+	else:
+		f=open(d+'.txt', 'w')
 	Log_Output("Starting Log @ "+d)
 def Log_Output(strToLog):
 	if console:
