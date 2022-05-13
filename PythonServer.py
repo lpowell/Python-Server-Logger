@@ -86,7 +86,13 @@ def ServerStart(HOST, PORT):
 											except Exception as error:
 												conn.send(">Error, try again\n".encode())
 										if data.decode().split()[1] == "transfer":
-											conn.send("Not implemented\n".encode())
+											# conn.send("Not implemented\n".encode())
+											with open(data.decode().split()[2], "rb") as f:
+												while True:
+													rbytes = f.read(BUFFER_SIZE)
+													if not rbytes:
+														break
+													conn.sendall(rbytes)
 							# decode the data to print it
 							nodata = 0
 							# encode and reply to the data source ip
