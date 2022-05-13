@@ -35,6 +35,7 @@ def ServerStart(HOST, PORT):
 							Log_Output(data.decode())
 							if data:
 								# dataparse = data.decode().split()
+								# Data processing block 
 								if data.decode().split()[0] == "close":
 									conn.send(">Closing ... Goodbye ...\n".encode())
 									Log_Output("<-- Connection closed via client -->")
