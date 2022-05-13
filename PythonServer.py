@@ -27,6 +27,24 @@ def ServerStart(HOST, PORT):
 					Log_Output("".join(str(output)))
 					Log_Output("<-- Attempting to receive data -->\n")
 					conn.send(">All connections Logged\n".encode())
+					conn.send(">Only authorized users beyond this point\n".encode())
+					conn.send("User: ".encode())
+					uname = conn.recv(1024)
+					if uname.decode().split()[0] != "admin":
+						conn.send(">Login failed ... Closing server ...".encode())
+						Log_Output("---------------------------")
+						Log_Output("Failed Logon @ username")
+						Log_Output("---------------------------")
+						break
+					conn.send("Pass: ".encode())
+					passw = conn.recv(1024)
+					if passw.decode().split()[0] != "Password!123":
+						conn.send(">Login failed ... Closing server ...".encode())
+						Log_Output("---------------------------")
+						Log_Output("Failed Logon @ password")
+						Log_Output("---------------------------")
+						break
+					conn.send(">Welcome, admin!\n".encode())
 					while True:
 						# while data exists
 						try:
@@ -100,7 +118,7 @@ def ServerStart(HOST, PORT):
 				# recursive function
 	except (KeyboardInterrupt):
 		Log_Output("---------------------------")
-		Log_Output("Application closed by user")
+		Log_Output("Application closed by server")
 		Log_Output("---------------------------")
 		pass
 		quit()
