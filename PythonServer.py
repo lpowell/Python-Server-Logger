@@ -145,7 +145,12 @@ def Log_Init():
 	# log file creation
 	global f
 	d = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-	f=open(d+'.txt', 'w')
+	if os.name == 'nt':
+		# env = os.environ['USERPROFILE'] +"/Documents/"
+		d = datetime.now().strftime("%Y-%m-%d @ (%H-%M-%S)")
+		f=open(d +'.txt', 'w')
+	else:
+		f=open(d+'.txt', 'w')
 	Log_Output("Starting Log @ "+d)
 def Log_Output(strToLog):
 	if console:
