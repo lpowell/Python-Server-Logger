@@ -1,0 +1,18 @@
+Starting Log @ 2022-05-20 07:49:04
+
+---------------------------
+('Connected by', ('192.168.10.37', 52908))
+<-- Attempting to receive data -->
+
+do list /
+
+('Directory list for', '/', 'sent to', ('192.168.10.37', 52908))
+beacon list /
+
+---------------------------
+   ATTEMPTING BEACONING
+---------------------------
+<-- Connection closed -->
+---------------------------
+Application closed by user
+---------------------------

